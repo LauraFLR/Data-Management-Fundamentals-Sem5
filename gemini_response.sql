@@ -1,0 +1,32 @@
+CREATE TABLE DimDate (
+    date_sk INTEGER PRIMARY KEY,
+    date_key DATE NOT NULL UNIQUE
+);
+
+CREATE TABLE DimProduct (
+    product_sk INTEGER PRIMARY KEY,
+    product_id VARCHAR(50) NOT NULL UNIQUE,
+    product_name VARCHAR(255),
+    category VARCHAR(100),
+    brand VARCHAR(100)
+);
+
+CREATE TABLE DimStore (
+    store_sk INTEGER PRIMARY KEY,
+    store_id VARCHAR(50) NOT NULL UNIQUE,
+    store_name VARCHAR(255),
+    country VARCHAR(100),
+    city VARCHAR(100)
+);
+
+CREATE TABLE FactSales (
+    sale_id VARCHAR(50) NOT NULL,
+    date_sk INTEGER NOT NULL,
+    product_sk INTEGER NOT NULL,
+    store_sk INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    unit_price DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (date_sk) REFERENCES DimDate(date_sk),
+    FOREIGN KEY (product_sk) REFERENCES DimProduct(product_sk),
+    FOREIGN KEY (store_sk) REFERENCES DimStore(store_sk)
+);
